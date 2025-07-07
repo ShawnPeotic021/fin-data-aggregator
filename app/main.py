@@ -1,7 +1,13 @@
 # app/main.py
 from fastapi import FastAPI
-from app.routes import connect, exchange_token, accounts, transactions,user_data
+from app.routes.user_onboarding import connect, exchange_token, user_data_local_test
+from app.routes.nested import sync_user_data
+
 from fastapi.middleware.cors import CORSMiddleware
+
+from app.database import Base, engine
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -17,9 +23,9 @@ app.add_middleware(
 #register routers
 app.include_router(connect.router, prefix= "/connect")
 app.include_router(exchange_token.router, prefix="/exchange-token")
-app.include_router(accounts.router, prefix = "/accounts")
-app.include_router(transactions.router, prefix ="/transactions")
-app.include_router(user_data.router, prefix ="/user-data")
+app.include_router(user_data_local_test.router, prefix ="/user-data-local-test")
+app.include_router(sync_user_data.router, prefix ="/sync-user-data")
+
 
 # App entry point
 if __name__ == "__main__":

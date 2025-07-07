@@ -32,7 +32,6 @@ def get_saved_token(user_id:str):
     raise HTTPException(status_code=404, detail="Token for user not found")
 
 
-
 def tidy_transactions(raw_transactions):
     result = []
     for trans in raw_transactions:
@@ -111,6 +110,7 @@ def get_user_data():
                 print(Fore.LIGHTGREEN_EX + "accounts")
 
                 per_insti_data = {
+                    "institution_id": institution_id,
                     "institution_name": institution_name,
                     "accounts": accounts
                 }
